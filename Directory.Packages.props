@@ -1,0 +1,13 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+  <!-- Run "dotnet list package (dash,dash)outdated" to see the latest versions of each
+    package.-->
+  <ItemGroup Label="Package Dependencies">
+    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0-rc.2.24474.3" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.10" />
+    <PackageVersion Include="Scalar.AspNetCore" Version="1.2.35" />
+    <PackageVersion Include="System.Drawing.Common" Version="9.0.0" />
+  </ItemGroup>
+</Project>

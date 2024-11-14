@@ -1,0 +1,5 @@
+<Project>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+        <AnalysisMode>AllEnabledByDefault</AnalysisMode>
+    </PropertyGroup>
+</Project>
