@@ -5,6 +5,14 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        policy =>
+        {
+            policy.AllowAnyOrigin();
+        });
+});
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddDbContext<PrinterContext>(opt =>
@@ -14,6 +22,8 @@ builder.Services.AddOpenApi();
 builder.Services.AddDirectoryBrowser();
 
 var app = builder.Build();
+
+app.UseCors();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -26,7 +36,6 @@ AppSetting.Init(app.Services.GetService<IConfiguration>());
 StringExtension.InitPrintCommand(AppSetting.Config?.GetSection("PrintCommand").Value);
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
 app.UseStaticFiles();
 
