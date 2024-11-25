@@ -17,4 +17,9 @@
     <PackageReference Include="Scalar.AspNetCore" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="StaticFiles\"></Folder>
+    <Content Include="StaticFiles\**" CopyToOutputDirectory="PreserveNewest"
+      CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
 </Project>
