@@ -14,9 +14,7 @@ public static class Command
         var processInfo = new ProcessStartInfo("powershell.exe", cmd)
         {
             CreateNoWindow = true,
-            UseShellExecute = false,
-            UserName = AppSetting.Config?.GetSection("UserName")?.Value,
-            Password = new NetworkCredential("", AppSetting.Config?.GetSection("UserPassword")?.Value).SecurePassword,
+            UseShellExecute = false
         };
 
         var process = Process.Start(processInfo);
