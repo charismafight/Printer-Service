@@ -12,7 +12,7 @@ public class PrinterManagerController(PrinterContext printerContext) : Controlle
 {
     PrinterContext _printerContext = printerContext;
 
-    string[] availableExtensions = ["doc", "docx", "xls", "xlsx", "png", "jpg", "pdf"];
+    string[] availableExtensions = [".doc", ".docx", ".xls", ".xlsx", ".png", ".jpg", ".pdf"];
 
     [HttpPost(Name = "Print")]
     [ActionName("Print")]
@@ -26,7 +26,6 @@ public class PrinterManagerController(PrinterContext printerContext) : Controlle
         await files.ForeachAsync(async f =>
         {
             var fileFullName = await SaveFileAsync(f);
-
             // execute printer command to print document
             if (string.IsNullOrWhiteSpace(fileFullName))
             {
@@ -85,10 +84,10 @@ public class PrinterManagerController(PrinterContext printerContext) : Controlle
         _ = fileStream.Seek(0, SeekOrigin.Begin);
         await fileStream.CopyToAsync(fs).ConfigureAwait(false);
         fs.Close();
-        var detector = new FileInfo(tempFileFullName).DetectFiletype();
-        if (!availableExtensions.Contains(detector.Extension))
+        var extension = Path.GetExtension(tempFileFullName);
+        if (!availableExtensions.Contains(extension))
         {
-            System.IO.File.Delete(tempFileFullName);
+            // System.IO.File.Delete(tempFileFullName);
             return string.Empty;
         }
 
