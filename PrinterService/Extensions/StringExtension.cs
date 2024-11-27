@@ -22,7 +22,15 @@ public static class StringExtension
             return;
         }
 
-        Command.Execute(printCMD.Replace("{Path}", path, StringComparison.CurrentCulture));
+        var extension = Path.GetExtension(path);
+        if (extension == ".pdf")
+        {
+            Command.PrintPDFs(path);
+        }
+        else
+        {
+            Command.Execute(printCMD.Replace("{Path}", path, StringComparison.CurrentCulture));
+        }
     }
 
     // #endif
