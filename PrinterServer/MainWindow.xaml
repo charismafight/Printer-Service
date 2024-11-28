@@ -8,9 +8,13 @@
         Loaded="MainWindow_OnLoaded"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="9*"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBox x:Name="RtbLog" TextWrapping="Wrap" AcceptsReturn="True" Text="sdfsdf">
+        </TextBox>
+
+        <Button Grid.Row="1" x:Name="BtnShowFiles" Content="ShowReceivedFiles" Click="BtnShowFiles_Click"></Button>
     </Grid>
 </Window>

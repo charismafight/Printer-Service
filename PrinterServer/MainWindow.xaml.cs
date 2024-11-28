@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -26,6 +27,11 @@ namespace PrinterServer
         {
             // start server
             WebHost.StartPrintServer();
+        }
+
+        private void BtnShowFiles_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start("explorer.exe", Environment.CurrentDirectory);
         }
     }
 }
