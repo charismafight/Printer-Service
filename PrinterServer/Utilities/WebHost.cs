@@ -2,6 +2,7 @@ using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Scalar.AspNetCore;
 
 namespace PrinterServer.Utilities
 {
@@ -31,21 +32,28 @@ namespace PrinterServer.Utilities
                            .AllowAnyMethod();
                 });
             });
+            builder.Services.AddOpenApi();
 
             var app = builder.Build();
+            app.MapScalarApiReference();
+            app.MapOpenApi();
             app.UseCors("AllowAll");
-            app.Urls.Add("http://0.0.0.0:9991");
+            var url = "http://0.0.0.0:9991";
+            app.Urls.Add(url);
             // just for test
             app.MapGet("/Print", () => "");
             app.MapPost("/Print", async (IFormFile? files) =>
             {
                 if (files is not null)
                 {
-                    (await SaveFileAsync(files)).Print();
-
+                    var filePath = await SaveFileAsync(files);
+                    LogViewModel.Instance.L($"{files.Name} saved at {filePath}");
+                    filePath.Print();
+                    LogViewModel.Instance.L($"{files.Name} printed");
                     return Results.Ok();
                 }
 
+                LogViewModel.Instance.L("Upload file is null");
                 return Results.NotFound();
             }).DisableAntiforgery()
             .RequireCors();
@@ -54,13 +62,16 @@ namespace PrinterServer.Utilities
             {
                 if (files is not null)
                 {
-                    await SaveFileAsync(files);
+                    var filePath = await SaveFileAsync(files);
+                    LogViewModel.Instance.L($"{files.Name} saved at {filePath}");
                     return Results.Ok();
                 }
 
+                LogViewModel.Instance.L("Upload file is null");
                 return Results.NotFound();
             }).DisableAntiforgery();
             app.RunAsync();
+            LogViewModel.Instance.L($"Print server started, listening on {url}");
         }
 
         static async Task<string> SaveFileAsync(IFormFile f)
