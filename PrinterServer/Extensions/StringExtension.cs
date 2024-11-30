@@ -16,7 +16,7 @@ public static class StringExtension
         var extension = Path.GetExtension(path);
         if (extension == ".pdf")
         {
-            Command.Execute(_adobe, $"/p /h \"{path}\"");
+            Command.Execute(_adobe, $"/p /h \"{path}\"", false);
             Thread.Sleep(10000);
             Command.KillProcess("Acrobat");
         }

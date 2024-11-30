@@ -4,7 +4,7 @@ using Masuit.Tools;
 
 public static class Command
 {
-    public static void Execute(string? cmd, string args = "")
+    public static void Execute(string? cmd, string args = "", bool waitExit = true)
     {
         if (cmd == null)
         {
@@ -14,8 +14,11 @@ public static class Command
         var processInfo = new ProcessStartInfo(cmd, args);
 
         var process = Process.Start(processInfo);
-        process?.WaitForExit();
-        process?.Close();
+        if (waitExit)
+        {
+            process?.WaitForExit();
+            process?.Close();
+        }
     }
 
     public static bool KillProcess(string? name)
